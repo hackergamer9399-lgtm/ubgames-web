@@ -1,20 +1,7 @@
 import React from 'react';
-import { GameCategory } from '../types';
-import { Search, Plus, Shield, MessageSquarePlus, Gamepad2, X, Sparkles } from 'lucide-react';
+import { Search, Plus, Shield, MessageSquarePlus, Gamepad2, X } from 'lucide-react';
 
-interface HeaderProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  selectedCategory: GameCategory;
-  setSelectedCategory: (cat: GameCategory) => void;
-  onOpenAddModal: () => void;
-  onOpenCloakModal: () => void;
-  onOpenRequestModal: () => void;
-  totalGamesCount: number;
-  favoritesCount: number;
-}
-
-export const Header: React.FC<HeaderProps> = ({
+export const Header = ({
   searchQuery,
   setSearchQuery,
   selectedCategory,

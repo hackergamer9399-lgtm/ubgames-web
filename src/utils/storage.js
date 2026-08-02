@@ -1,4 +1,3 @@
-import { CloakConfig, Game, GameUserData } from '../types';
 import initialGames from '../data/games.json';
 
 const FAVORITES_KEY = 'ubg_favorites';
@@ -8,14 +7,13 @@ const CLOAK_CONFIG_KEY = 'ubg_cloak_config';
 const GAME_REQUESTS_KEY = 'ubg_game_requests';
 
 // Get all combined games (initial JSON + user custom games)
-export function getAllGames(): Game[] {
+export function getAllGames() {
   const custom = getCustomGames();
-  const initial = initialGames as Game[];
-  return [...custom, ...initial];
+  return [...custom, ...initialGames];
 }
 
 // Get custom games from localStorage
-export function getCustomGames(): Game[] {
+export function getCustomGames() {
   try {
     const data = localStorage.getItem(CUSTOM_GAMES_KEY);
     return data ? JSON.parse(data) : [];
@@ -25,9 +23,9 @@ export function getCustomGames(): Game[] {
 }
 
 // Save a new custom game
-export function addCustomGame(newGame: Omit<Game, 'id' | 'isCustom' | 'rating' | 'plays'> & { id?: string }): Game {
+export function addCustomGame(newGame) {
   const customGames = getCustomGames();
-  const game: Game = {
+  const game = {
     ...newGame,
     id: newGame.id || `custom-${Date.now()}`,
     isCustom: true,
@@ -42,19 +40,19 @@ export function addCustomGame(newGame: Omit<Game, 'id' | 'isCustom' | 'rating' |
 }
 
 // Remove a custom game
-export function removeCustomGame(id: string): void {
+export function removeCustomGame(id) {
   const customGames = getCustomGames().filter((g) => g.id !== id);
   localStorage.setItem(CUSTOM_GAMES_KEY, JSON.stringify(customGames));
 }
 
 // Export custom games as JSON string
-export function exportGamesJSON(): string {
+export function exportGamesJSON() {
   const custom = getCustomGames();
   return JSON.stringify(custom, null, 2);
 }
 
 // Import custom games from JSON string
-export function importGamesJSON(jsonStr: string): boolean {
+export function importGamesJSON(jsonStr) {
   try {
     const parsed = JSON.parse(jsonStr);
     if (!Array.isArray(parsed)) return false;
@@ -62,7 +60,7 @@ export function importGamesJSON(jsonStr: string): boolean {
     const existing = getCustomGames();
     const existingIds = new Set(existing.map((g) => g.id));
 
-    const validNewGames: Game[] = [];
+    const validNewGames = [];
     for (const item of parsed) {
       if (item.title && (item.iframeUrl || item.srcDoc)) {
         const id = item.id && !existingIds.has(item.id) ? item.id : `imported-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
@@ -94,7 +92,7 @@ export function importGamesJSON(jsonStr: string): boolean {
 }
 
 // Get User Data for a specific game (Favorites, Notes, High Score, Like/Dislike)
-export function getGameUserData(gameId: string): GameUserData {
+export function getGameUserData(gameId) {
   try {
     const allDataRaw = localStorage.getItem(USER_DATA_KEY);
     const allData = allDataRaw ? JSON.parse(allDataRaw) : {};
@@ -112,7 +110,7 @@ export function getGameUserData(gameId: string): GameUserData {
   }
 }
 
-export function saveGameUserData(gameId: string, updates: Partial<GameUserData>): void {
+export function saveGameUserData(gameId, updates) {
   try {
     const allDataRaw = localStorage.getItem(USER_DATA_KEY);
     const allData = allDataRaw ? JSON.parse(allDataRaw) : {};
@@ -130,7 +128,7 @@ export function saveGameUserData(gameId: string, updates: Partial<GameUserData>)
 }
 
 // Favorites list
-export function getFavoritesList(): string[] {
+export function getFavoritesList() {
   try {
     const data = localStorage.getItem(FAVORITES_KEY);
     return data ? JSON.parse(data) : [];
@@ -139,7 +137,7 @@ export function getFavoritesList(): string[] {
   }
 }
 
-export function toggleFavorite(gameId: string): boolean {
+export function toggleFavorite(gameId) {
   const favs = getFavoritesList();
   const index = favs.indexOf(gameId);
   let isFav = false;
@@ -157,7 +155,7 @@ export function toggleFavorite(gameId: string): boolean {
 }
 
 // Cloak Config
-export function getCloakConfig(): CloakConfig {
+export function getCloakConfig() {
   try {
     const raw = localStorage.getItem(CLOAK_CONFIG_KEY);
     if (raw) return JSON.parse(raw);
@@ -169,13 +167,13 @@ export function getCloakConfig(): CloakConfig {
   };
 }
 
-export function saveCloakConfig(config: CloakConfig): void {
+export function saveCloakConfig(config) {
   localStorage.setItem(CLOAK_CONFIG_KEY, JSON.stringify(config));
   applyCloak(config);
 }
 
-export function applyCloak(config: CloakConfig): void {
-  const faviconEl = document.querySelector("link[rel*='icon']") as HTMLLinkElement || document.createElement('link');
+export function applyCloak(config) {
+  const faviconEl = document.querySelector("link[rel*='icon']") || document.createElement('link');
   faviconEl.type = 'image/x-icon';
   faviconEl.rel = 'shortcut icon';
 
@@ -205,7 +203,7 @@ export function applyCloak(config: CloakConfig): void {
 }
 
 // Game Requests
-export function addGameRequest(gameName: string, notes: string): void {
+export function addGameRequest(gameName, notes) {
   try {
     const raw = localStorage.getItem(GAME_REQUESTS_KEY);
     const requests = raw ? JSON.parse(raw) : [];
