@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Header } from './components/Header.jsx';
-import { Sidebar } from './components/Sidebar.jsx';
-import { GameGrid } from './components/GameGrid.jsx';
-import { GamePlayer } from './components/GamePlayer.jsx';
-import { AddGameModal } from './components/AddGameModal.jsx';
-import { CloakModal } from './components/CloakModal.jsx';
-import { RequestModal } from './components/RequestModal.jsx';
-import { Footer } from './components/Footer.jsx';
+import { Header } from './components/Header.js';
+import { Sidebar } from './components/Sidebar.js';
+import { GameGrid } from './components/GameGrid.js';
+import { GamePlayer } from './components/GamePlayer.js';
+import { AddGameModal } from './components/AddGameModal.js';
+import { CloakModal } from './components/CloakModal.js';
+import { RequestModal } from './components/RequestModal.js';
+import { Footer } from './components/Footer.js';
 import {
   getAllGames,
   getFavoritesList,

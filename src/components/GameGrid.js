@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameCard } from './GameCard.jsx';
+import { GameCard } from './GameCard.js';
 import { Gamepad2, Plus, SearchX } from 'lucide-react';
 
 export const GameGrid = ({
