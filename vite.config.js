@@ -9,6 +9,7 @@ export default defineConfig(() => {
     plugins: [
       {
         name: 'treat-js-files-as-jsx',
+        enforce: 'pre',
         async transform(code, id) {
           if (!id.match(/src\/.*\.js$/)) return null;
           return transformWithEsbuild(code, id, {
